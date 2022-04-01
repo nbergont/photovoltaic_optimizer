@@ -88,7 +88,7 @@ void call_later(unsigned long duration_us, void(*callback)(void)) {
 }
 
 // timer interrupt routine : call the function which gas been registered earlier (see call_later)
-void ICACHE_RAM_ATTR onTimerISR(){
+IRAM_ATTR void onTimerISR(){
     void (*f)(void) = timer_callback;
     timer_callback = NULL;
     if(f) {
@@ -111,7 +111,7 @@ void onDelayExpired() {
 }
 
 // pin ZERO interrupt routine
-void onZero() {
+IRAM_ATTR void onZero() {
     if(power > 0) {
         // generate a pulse after this zero
         // power=100%: no wait, power=0%: wait 10ms
